@@ -1,9 +1,34 @@
 const express = require('express');
 const app = express();
 const dotenv = require('dotenv');
+const cors = require('cors');
+const path = require('path');
+const fs = require('fs');
 dotenv.config();
 
+// Middleware to parse JSON and form-data requests
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
+
+// Import and initialize database connection
+require('./config/config');
+
+// Ensure "uploads" directories exist dynamically
+const uploadDirs = ['uploads', 'uploads/features', 'uploads/movies'];
+uploadDirs.forEach((dir) => {
+  const fullPath = path.join(__dirname, dir);
+  if (!fs.existsSync(fullPath)) {
+    fs.mkdirSync(fullPath, { recursive: true });
+    console.log(`Directory created: ${dir}`);
+  }
+});
+
+// Serve static files from the "uploads" folder and subfolders
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 // Import routes
+const authRoutes = require('./routes/authRoutes');
 const featureRoutes = require('./routes/featuresRoutes');
 const hallRoutes = require('./routes/hallRoutes');
 const hallwiseSeatRoutes = require('./routes/hallwiseSeatRoutes');
@@ -18,10 +43,8 @@ const showtimeRoutes = require('./routes/showtimeRoutes');
 const theatreRoutes = require('./routes/theatreRoutes');
 const ticketRoutes = require('./routes/ticketRoutes');
 
-// Middleware to parse JSON requests
-app.use(express.json());
-
 // Routes
+app.use('/api/auth', authRoutes);
 app.use('/api/features', featureRoutes);
 app.use('/api/halls', hallRoutes);
 app.use('/api/hallwiseSeats', hallwiseSeatRoutes);

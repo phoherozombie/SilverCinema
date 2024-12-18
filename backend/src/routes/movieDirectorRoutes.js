@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { getAllMovieDirectors, createMovieDirector, updateMovieDirector, deleteMovieDirector } = require('../controllers/movieDirectorController');
+const movieDirectorController = require('../controllers/movieDirectorController');
 
-router.get('/', getAllMovieDirectors);
-router.post('/', createMovieDirector);
-router.put('/:id', updateMovieDirector);
-router.delete('/:id', deleteMovieDirector);
+router.get('/', movieDirectorController.getAllMovieDirectors);
+router.post('/', movieDirectorController.createMovieDirector);
+router.put('/:id', movieDirectorController.updateMovieDirector);
+router.delete('/:id', movieDirectorController.deleteMovieDirector);
 
 module.exports = router;

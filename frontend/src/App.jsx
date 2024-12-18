@@ -17,6 +17,10 @@ import { MobileNav } from "./components/MobileNav";
 import { PageLoader } from "./components/PageLoader";
 import { ScrollToTop } from "./components/ScrollToTop";
 
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { login } from "./reducers/authSlice";
+
 import HomePage from "./pages/Home/HomePage";
 
 const PurchasePage = lazy(() => import("./pages/Purchase/PurchasePage"));
@@ -41,6 +45,16 @@ function App() {
     useSelector((store) => store.authentication);
   const { menuState } = useSelector((store) => store.mobileNav);
   const currentPage = useLocation();
+  const dispatch = useDispatch();
+
+  // Load persisted data on app start
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (token && user) {
+      dispatch(login(user));
+    }
+  }, [dispatch]);
 
   return (
     <>

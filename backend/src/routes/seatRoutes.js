@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { getAllSeats, createSeat, updateSeat, deleteSeat } = require('../controllers/seatController');
+const seatController = require('../controllers/seatController');
 
-router.get('/', getAllSeats);
-router.post('/', createSeat);
-router.put('/:id', updateSeat);
-router.delete('/:id', deleteSeat);
+router.get('/', seatController.getAllSeats);
+router.post('/', seatController.createSeat);
+router.put('/:id', seatController.updateSeat);
+router.delete('/:id', seatController.deleteSeat);
 
 module.exports = router;

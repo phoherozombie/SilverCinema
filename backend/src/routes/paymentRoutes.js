@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { getAllPayments, createPayment, updatePayment, deletePayment } = require('../controllers/paymentController');
+const paymentController = require('../controllers/paymentController');
 
-router.get('/', getAllPayments);
-router.post('/', createPayment);
-router.put('/:id', updatePayment);
-router.delete('/:id', deletePayment);
+router.get('/', paymentController.getAllPayments);
+router.post('/', paymentController.createPayment);
+router.put('/:id', paymentController.updatePayment);
+router.delete('/:id', paymentController.deletePayment);
 
 module.exports = router;

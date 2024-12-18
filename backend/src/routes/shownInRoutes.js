@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { getAllShownIn, createShownIn, updateShownIn, deleteShownIn } = require('../controllers/shownInController');
+const shownInController = require('../controllers/shownInController');
 
-router.get('/', getAllShownIn);
-router.post('/', createShownIn);
-router.put('/:id', updateShownIn);
-router.delete('/:id', deleteShownIn);
+router.get('/', shownInController.getAllShownIn);
+router.post('/', shownInController.createShownIn);
+router.put('/:id', shownInController.updateShownIn);
+router.delete('/:id', shownInController.deleteShownIn);
 
 module.exports = router;

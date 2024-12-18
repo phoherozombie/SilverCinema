@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { getAllTheatres, createTheatre, updateTheatre, deleteTheatre } = require('../controllers/theatreController');
+const theatreController = require('../controllers/theatreController');
 
-router.get('/', getAllTheatres);
-router.post('/', createTheatre);
-router.put('/:id', updateTheatre);
-router.delete('/:id', deleteTheatre);
+router.get('/', theatreController.getAllTheatres);
+router.post('/', theatreController.createTheatre);
+router.put('/:id', theatreController.updateTheatre);
+router.delete('/:id', theatreController.deleteTheatre);
 
 module.exports = router;

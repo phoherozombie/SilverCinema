@@ -1,47 +1,52 @@
 const { ShownIn } = require('../models');
 
-const getAllShownIn = async (req, res) => {
-  try {
-    const shownIn = await ShownIn.findAll();
-    res.status(200).json(shownIn);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-const createShownIn = async (req, res) => {
-  try {
-    const shownIn = await ShownIn.create(req.body);
-    res.status(201).json(shownIn);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-const updateShownIn = async (req, res) => {
-  try {
-    const shownIn = await ShownIn.findByPk(req.params.id);
-    if (!shownIn) {
-      return res.status(404).json({ message: 'Shown In not found' });
+// Get all "shown in" records
+exports.getAllShownIn = async (req, res) => {
+    try {
+        const shownInRecords = await ShownIn.findAll();
+        res.status(200).json(shownInRecords);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
-    await shownIn.update(req.body);
-    res.status(200).json(shownIn);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
 };
 
-const deleteShownIn = async (req, res) => {
-  try {
-    const shownIn = await ShownIn.findByPk(req.params.id);
-    if (!shownIn) {
-      return res.status(404).json({ message: 'Shown In not found' });
+// Create a new "shown in" record
+exports.createShownIn = async (req, res) => {
+    try {
+        const shownIn = await ShownIn.create({
+            movieId: req.body.movieId,
+            theatreId: req.body.theatreId,
+            startDate: req.body.startDate,
+            endDate: req.body.endDate
+        });
+        res.status(201).json(shownIn);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
     }
-    await shownIn.destroy();
-    res.status(200).json({ message: 'Shown In deleted successfully' });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
 };
 
-module.exports = { getAllShownIn, createShownIn, updateShownIn, deleteShownIn };
+// Update a "shown in" record
+exports.updateShownIn = async (req, res) => {
+    try {
+        const updatedRows = await ShownIn.update(req.body, { where: { id: req.params.id } });
+        if (updatedRows[0] === 0) {
+            return res.status(404).json({ message: 'ShownIn record not found' });
+        }
+        res.status(200).json({ message: 'ShownIn record updated successfully' });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
+// Delete a "shown in" record
+exports.deleteShownIn = async (req, res) => {
+    try {
+        const deletedRows = await ShownIn.destroy({ where: { id: req.params.id } });
+        if (deletedRows === 0) {
+            return res.status(404).json({ message: 'ShownIn record not found' });
+        }
+        res.status(204).send();
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};

@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('MovieDirectors', {
+    await queryInterface.createTable('MovieGenres', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -17,7 +17,7 @@ module.exports = {
           key: 'id'
         }
       },
-      director: {
+      genre: {
         type: Sequelize.STRING(30),
         allowNull: false
       },
@@ -32,6 +32,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('MovieDirectors');
+    await queryInterface.dropTable('MovieGenres');
   }
 };

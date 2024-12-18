@@ -1,47 +1,51 @@
 const { Theatre } = require('../models');
 
-const getAllTheatres = async (req, res) => {
-  try {
-    const theatres = await Theatre.findAll();
-    res.status(200).json(theatres);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-const createTheatre = async (req, res) => {
-  try {
-    const theatre = await Theatre.create(req.body);
-    res.status(201).json(theatre);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-const updateTheatre = async (req, res) => {
-  try {
-    const theatre = await Theatre.findByPk(req.params.id);
-    if (!theatre) {
-      return res.status(404).json({ message: 'Theatre not found' });
+// Get all theatres
+exports.getAllTheatres = async (req, res) => {
+    try {
+        const theatres = await Theatre.findAll();
+        res.status(200).json(theatres);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
-    await theatre.update(req.body);
-    res.status(200).json(theatre);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
 };
 
-const deleteTheatre = async (req, res) => {
-  try {
-    const theatre = await Theatre.findByPk(req.params.id);
-    if (!theatre) {
-      return res.status(404).json({ message: 'Theatre not found' });
+// Create a new theatre
+exports.createTheatre = async (req, res) => {
+    try {
+        const theatre = await Theatre.create({
+            name: req.body.name,
+            location: req.body.location,
+            capacity: req.body.capacity
+        });
+        res.status(201).json(theatre);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
     }
-    await theatre.destroy();
-    res.status(200).json({ message: 'Theatre deleted successfully' });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
 };
 
-module.exports = { getAllTheatres, createTheatre, updateTheatre, deleteTheatre };
+// Update a theatre
+exports.updateTheatre = async (req, res) => {
+    try {
+        const updatedRows = await Theatre.update(req.body, { where: { id: req.params.id } });
+        if (updatedRows[0] === 0) {
+            return res.status(404).json({ message: 'Theatre not found' });
+        }
+        res.status(200).json({ message: 'Theatre updated successfully' });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
+// Delete a theatre
+exports.deleteTheatre = async (req, res) => {
+    try {
+        const deletedRows = await Theatre.destroy({ where: { id: req.params.id } });
+        if (deletedRows === 0) {
+            return res.status(404).json({ message: 'Theatre not found' });
+        }
+        res.status(204).send();
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};

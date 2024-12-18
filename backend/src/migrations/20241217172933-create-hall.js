@@ -23,7 +23,9 @@ module.exports = {
         references: {
           model: 'Theatres',
           key: 'id'
-        }
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       },
       createdAt: {
         allowNull: false,
