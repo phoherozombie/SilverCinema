@@ -70,39 +70,28 @@ function App() {
           <Routes key={currentPage.pathname} location={currentPage}>
             <Route path="/" element={<HomePage />} />
             <Route path="/showtimes" element={<ShowtimesPage />} />
+            <Route path="/purchase" element={<PurchasePage />} />
+            <Route path="/customer" element={<CustomerInfoPage />} />
+            <Route path="/aboutus" element={<AboutUsPage />} />
+            <Route path="/movieDetails/:id" element={<MovieDetailsPage />} />
+            <Route path="/purchase" element={<PurchasePage />} />
+            <Route path="/customer" element={<CustomerInfoPage />} />
             <Route
-              element={
-                <ProtectedRoute
-                  condition={
-                    isAuthenticated && signedPerson.person_type === "Customer"
-                  }
-                />
-              }
-            >
-              <Route path="/purchase" element={<PurchasePage />} />
-              <Route path="/customer" element={<CustomerInfoPage />} />
-            </Route>
+              path="/movieDetails"
+              element={<Navigate replace to="/movieDetails/1" />}
+            />
 
             <Route
               element={
                 <ProtectedRoute
                   condition={
-                    isAuthenticated && signedPerson.person_type === "Admin"
+                    isAuthenticated && signedPerson.type_account === "admin"
                   }
                 />
               }
             >
               <Route path="/admin" element={<AdminPage />} />
             </Route>
-
-            <Route path="/aboutus" element={<AboutUsPage />} />
-
-            <Route
-              path="/movieDetails"
-              element={<Navigate replace to="/movieDetails/1" />}
-            />
-
-            <Route path="/movieDetails/:id" element={<MovieDetailsPage />} />
           </Routes>
         </Suspense>
       </div>

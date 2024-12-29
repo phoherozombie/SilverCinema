@@ -59,12 +59,14 @@ export const LoginModal = () => {
         loginSuccessToast("Login successful!");
 
         // Redirect based on role
-        if (user.role === "Admin") {
+        console.log("User Role:", user.role);
+        if (user.role === "admin") {
           navigate("/admin");
         } else {
           navigate("/");
         }
       } catch (err) {
+        console.error("Login Error:", err.response?.data || err.message);
         loginFailedToast(
           err.response?.data?.message || "Login failed. Please try again."
         );
