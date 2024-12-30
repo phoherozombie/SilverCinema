@@ -10,7 +10,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
-        type: Sequelize.STRING(50),
+        type: Sequelize.STRING(100),
         allowNull: true
       },
       image_path: {
@@ -40,6 +40,14 @@ module.exports = {
       release_date: {
         type: Sequelize.DATEONLY,
         allowNull: true
+      },
+      genre_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'MovieGenres',
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,

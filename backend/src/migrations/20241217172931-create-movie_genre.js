@@ -2,28 +2,16 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Showtimes', {
+    await queryInterface.createTable('MovieGenres', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      movie_start_time: {
-        type: Sequelize.STRING(20),
-        allowNull: true
-      },
-      show_type: {
-        type: Sequelize.STRING(2),
-        allowNull: true
-      },
-      showtime_date: {
-        type: Sequelize.DATEONLY,
-        allowNull: true
-      },
-      price_per_seat: {
-        type: Sequelize.INTEGER,
-        allowNull: true
+      genre: {
+        type: Sequelize.STRING(50),
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
@@ -36,6 +24,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Showtimes');
+    await queryInterface.dropTable('MovieGenres');
   }
 };

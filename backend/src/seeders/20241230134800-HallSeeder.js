@@ -26,8 +26,8 @@ module.exports = {
       }
     ]);
   },
+
   down: async (queryInterface, Sequelize) => {
     await queryInterface.bulkDelete('Halls', null, {});
-    await queryInterface.bulkDelete('Theatres', null, {});
   }
-}; 
+};

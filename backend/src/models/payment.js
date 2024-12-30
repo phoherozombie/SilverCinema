@@ -1,9 +1,13 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Payment = sequelize.define('Payment', {
-    payment_time: {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    createdAt: {
       type: DataTypes.DATE,
-      allowNull: false,
       defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
     },
     amount: {
@@ -14,14 +18,18 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(30),
       allowNull: true
     },
-    customer_email: {
-      type: DataTypes.STRING(100),
-      allowNull: false
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Users',
+        key: 'id'
+      }
     }
   });
 
-  Payment.associate = function (models) {
-    Payment.belongsTo(models.User, { foreignKey: 'customer_email' });
+  Payment.associate = function(models) {
+    Payment.belongsTo(models.User, { foreignKey: 'user_id' });
   };
 
   return Payment;

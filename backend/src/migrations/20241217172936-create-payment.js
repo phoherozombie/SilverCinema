@@ -22,12 +22,12 @@ module.exports = {
         type: Sequelize.STRING(30),
         allowNull: true
       },
-      customer_email: {
-        type: Sequelize.STRING(100),
+      user_id: {
+        type: Sequelize.INTEGER,
         allowNull: false,
-        references: {
+        references: { 
           model: 'Users',
-          key: 'email'
+          key: 'id'
         }
       },
       createdAt: {

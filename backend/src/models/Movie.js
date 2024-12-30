@@ -32,8 +32,20 @@ module.exports = (sequelize, DataTypes) => {
     release_date: {
       type: DataTypes.DATEONLY,
       allowNull: true
+    },
+    genre_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'MovieGenres',
+        key: 'id'
+      }
     }
   });
+
+  Movie.associate = function(models) {
+    Movie.belongsTo(models.MovieGenre, { foreignKey: 'genre_id' });
+  };
 
   return Movie;
 };

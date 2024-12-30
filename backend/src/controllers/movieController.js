@@ -11,6 +11,18 @@ exports.getAllMovies = async (req, res) => {
     }
 };
 
+exports.getMovieById = async (req, res) => {
+    try {
+        const movie = await Movie.findByPk(req.params.id);
+        if (!movie) {
+            return res.status(404).json({ message: 'Movie not found' });
+        }
+        res.status(200).json(movie);
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to retrieve movies', error: error.message });
+    }
+};
+
 // Create a new movie
 exports.createMovie = async (req, res) => {
     try {

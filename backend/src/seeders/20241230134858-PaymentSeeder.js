@@ -7,7 +7,15 @@ module.exports = {
         payment_time: new Date(),
         amount: 100,
         method: 'Credit Card',
-        customer_email: 'user1@gmail.com',
+        user_id: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        payment_time: new Date(),
+        amount: 200,
+        method: 'Debit Card',
+        user_id: 1,
         createdAt: new Date(),
         updatedAt: new Date(),
       }
