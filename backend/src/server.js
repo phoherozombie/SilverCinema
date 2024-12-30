@@ -15,7 +15,7 @@ app.use(cors());
 require('./config/config');
 
 // Ensure "uploads" directories exist dynamically
-const uploadDirs = ['uploads', 'uploads/features', 'uploads/movies'];
+const uploadDirs = ['uploads', 'uploads/features', 'uploads/movies', 'uploads/avatars'];
 uploadDirs.forEach((dir) => {
   const fullPath = path.join(__dirname, dir);
   if (!fs.existsSync(fullPath)) {

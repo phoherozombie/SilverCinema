@@ -1,4 +1,5 @@
-const { User } = require('../models');
+const { User, Avatar } = require('../models');
+const path = require('path');
 
 // Get all users
 exports.getAllUsers = async (req, res) => {
@@ -50,6 +51,39 @@ exports.updateUser = async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 };
+
+// Update user avatar
+exports.updateAvatar = async (req, res) => {
+    try {
+      const userId = req.params.id;
+      const avatarPath = req.file ? path.relative(process.cwd(), req.file.path) : null;
+  
+      if (!avatarPath) {
+        return res.status(400).json({ message: 'Avatar image is required' });
+      }
+  
+      // Find existing user
+      const user = await User.findByPk(userId);
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      // Create or update avatar
+      const [avatar, created] = await Avatar.findOrCreate({
+        where: { userId: userId },
+        defaults: { path: avatarPath }
+      });
+  
+      if (!created) {
+        avatar.path = avatarPath;
+        await avatar.save();
+      }
+  
+      res.status(200).json({ message: 'Avatar updated successfully', avatar });
+    } catch (error) {
+      res.status(500).json({ message: 'Failed to update avatar', error: error.message });
+    }
+  };
 
 // Delete a user
 exports.deleteUser = async (req, res) => {

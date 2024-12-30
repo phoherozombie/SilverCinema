@@ -45,4 +45,5 @@ const createUpload = (folderName) => {
 module.exports = {
   featureUpload: createUpload("features"),
   movieUpload: createUpload("movies"),
+  avatarUpload: createUpload("avatars"),
 };
