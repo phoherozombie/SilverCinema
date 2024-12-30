@@ -9,8 +9,8 @@ module.exports = {
         {
           id: 1,
           first_name: 'Admin',
-          last_name: 'Admin',
-          email: 'admin@example.com',
+          last_name: 'Account',
+          email: 'admin@gmail.com',
           password: hashedPassword,
           account_balance: 0,
           type_account: 'admin',
