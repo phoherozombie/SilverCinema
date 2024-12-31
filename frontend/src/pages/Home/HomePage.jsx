@@ -9,7 +9,6 @@ import { TopEdge } from "../../components/TopEdge";
 const HomePage = () => {
   return (
     <>
-      <TopEdge />
       <Navbar />
       <HeroSection />
       <HomeCollection />
