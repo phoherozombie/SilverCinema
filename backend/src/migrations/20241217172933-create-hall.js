@@ -1,43 +1,47 @@
 'use strict';
 /** @type {import('sequelize-cli').Migration} */
+
+
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Halls', {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.createTable('hall', {
       id: {
+        type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
       },
       name: {
-        type: Sequelize.STRING(50),
-        allowNull: true
+        type: Sequelize.STRING(10),
+        allowNull: true,
       },
       total_seats: {
         type: Sequelize.INTEGER,
-        allowNull: true
+        allowNull: true,
       },
       theatre_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Theatres',
-          key: 'id'
+          model: 'theatre', // Name of the referenced table
+          key: 'id',        // Column in the referenced table
         },
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE', // Ensures cascading deletion
       },
       createdAt: {
+        type: Sequelize.DATE,
         allowNull: false,
-        type: Sequelize.DATE
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
       updatedAt: {
+        type: Sequelize.DATE,
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
+      },
     });
   },
-  async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Halls');
-  }
+
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.dropTable('hall');
+  },
 };

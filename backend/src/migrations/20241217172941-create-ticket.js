@@ -1,73 +1,81 @@
 'use strict';
-/** @type {import('sequelize-cli').Migration} */
+
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Tickets', {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.createTable('ticket', {
       id: {
+        type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
       },
       price: {
         type: Sequelize.INTEGER,
-        allowNull: true
+        allowNull: true,
       },
       purchase_date: {
         type: Sequelize.DATEONLY,
-        allowNull: true
+        allowNull: true,
       },
       payment_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Payments',
-          key: 'id'
-        }
+          model: 'payment',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
       },
       seat_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Seats',
-          key: 'id'
-        }
+          model: 'seat',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
       },
       hall_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Halls',
-          key: 'id'
-        }
+          model: 'hall',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
       },
       movie_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Movies',
-          key: 'id'
-        }
+          model: 'movie',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
       },
       showtimes_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Showtimes',
-          key: 'id'
-        }
+          model: 'showtimes',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
       },
       createdAt: {
+        type: Sequelize.DATE,
         allowNull: false,
-        type: Sequelize.DATE
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
       updatedAt: {
+        type: Sequelize.DATE,
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
+      },
     });
   },
-  async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Tickets');
-  }
+
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.dropTable('ticket');
+  },
 };

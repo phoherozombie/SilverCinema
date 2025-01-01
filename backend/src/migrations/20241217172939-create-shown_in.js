@@ -1,65 +1,52 @@
 'use strict';
-/** @type {import('sequelize-cli').Migration} */
+
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('ShownIns', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER,
-      },
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.createTable('shown_in', {
       movie_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Movies',
+          model: 'movie', // Referencing the 'movie' table
           key: 'id',
         },
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE', // Cascade delete when a movie is removed
+        primaryKey: true,
       },
       showtime_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Showtimes',
+          model: 'showtimes', // Referencing the 'showtimes' table
           key: 'id',
         },
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE', // Cascade delete when a showtime is removed
+        primaryKey: true,
       },
       hall_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Halls',
+          model: 'hall', // Referencing the 'hall' table
           key: 'id',
         },
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',
-      },
-      theatre_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'Theatres',
-          key: 'id',
-        },
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE', // Cascade delete when a hall is removed
+        primaryKey: true,
       },
       createdAt: {
-        allowNull: false,
         type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
       updatedAt: {
-        allowNull: false,
         type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
       },
     });
   },
-  async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('ShownIns');
+
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.dropTable('shown_in');
   },
 };

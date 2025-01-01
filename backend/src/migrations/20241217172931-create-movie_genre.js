@@ -1,29 +1,27 @@
 'use strict';
-/** @type {import('sequelize-cli').Migration} */
+
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('MovieGenres', {
-      id: {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.createTable('movie_genre', {
+      movie_id: {
+        type: Sequelize.INTEGER,
         allowNull: false,
-        autoIncrement: true,
+        references: {
+          model: 'movie', // Referencing the 'movie' table
+          key: 'id',
+        },
+        onDelete: 'CASCADE', // Cascade delete when a movie is removed
         primaryKey: true,
-        type: Sequelize.INTEGER
       },
       genre: {
-        type: Sequelize.STRING(50),
-        allowNull: false
-      },
-      createdAt: {
+        type: Sequelize.STRING(30),
         allowNull: false,
-        type: Sequelize.DATE
+        primaryKey: true,
       },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
     });
   },
-  async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('MovieGenres');
-  }
+
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.dropTable('movie_genre');
+  },
 };

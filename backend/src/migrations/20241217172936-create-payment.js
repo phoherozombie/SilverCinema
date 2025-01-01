@@ -1,46 +1,50 @@
 'use strict';
-/** @type {import('sequelize-cli').Migration} */
+
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Payments', {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.createTable('payment', {
       id: {
+        type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
       },
       payment_time: {
         type: Sequelize.DATE,
         allowNull: false,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
       amount: {
         type: Sequelize.INTEGER,
-        allowNull: true
+        allowNull: true,
       },
       method: {
         type: Sequelize.STRING(30),
-        allowNull: true
+        allowNull: true,
       },
-      user_id: {
-        type: Sequelize.INTEGER,
+      customer_email: {
+        type: Sequelize.STRING(100),
         allowNull: false,
-        references: { 
-          model: 'Users',
-          key: 'id'
-        }
+        references: {
+          model: 'person', // Referencing the 'person' table
+          key: 'email',
+        },
+        onDelete: 'CASCADE', // Cascade delete when the associated person is removed
       },
       createdAt: {
+        type: Sequelize.DATE,
         allowNull: false,
-        type: Sequelize.DATE
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
       updatedAt: {
+        type: Sequelize.DATE,
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
+      },
     });
   },
-  async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Payments');
-  }
+
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.dropTable('payment');
+  },
 };
