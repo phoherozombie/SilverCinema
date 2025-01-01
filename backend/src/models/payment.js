@@ -1,36 +1,56 @@
 'use strict';
-module.exports = (sequelize, DataTypes) => {
-  const Payment = sequelize.define('Payment', {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true
-    },
-    createdAt: {
-      type: DataTypes.DATE,
-      defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
-    },
-    amount: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
-    method: {
-      type: DataTypes.STRING(30),
-      allowNull: true
-    },
-    user_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'Users',
-        key: 'id'
-      }
-    }
-  });
 
-  Payment.associate = function(models) {
-    Payment.belongsTo(models.User, { foreignKey: 'user_id' });
-  };
+const { Model } = require('sequelize');
+
+module.exports = (sequelize, DataTypes) => {
+  class Payment extends Model {
+    static associate(models) {
+      // Define associations here
+      Payment.belongsTo(models.Person, {
+        foreignKey: 'customer_email',
+        as: 'customer',
+      });
+    }
+  }
+
+  Payment.init(
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      payment_time: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+      },
+      amount: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+      method: {
+        type: DataTypes.STRING(30),
+        allowNull: true,
+      },
+      customer_email: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+        references: {
+          model: 'Person', // Name of the related table
+          key: 'email',
+        },
+        onDelete: 'CASCADE',
+      },
+    },
+    {
+      sequelize,
+      modelName: 'Payment',
+      tableName: 'payment',
+      timestamps: false,
+    }
+  );
 
   return Payment;
 };

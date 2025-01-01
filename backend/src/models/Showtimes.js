@@ -3,21 +3,17 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class Theatre extends Model {
+  class Showtimes extends Model {
     static associate(models) {
       // Define associations here
-      Theatre.hasMany(models.Hall, {
-        foreignKey: 'theatre_id',
-        as: 'halls',
-      });
-      Theatre.hasMany(models.Features, {
-        foreignKey: 'theatre_id',
-        as: 'features',
+      Showtimes.hasMany(models.ShownIn, {
+        foreignKey: 'showtime_id',
+        as: 'shownIn',
       });
     }
   }
 
-  Theatre.init(
+  Showtimes.init(
     {
       id: {
         type: DataTypes.INTEGER,
@@ -25,26 +21,30 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      name: {
-        type: DataTypes.STRING(100),
+      movie_start_time: {
+        type: DataTypes.STRING(20),
         allowNull: true,
       },
-      location: {
-        type: DataTypes.STRING(30),
+      show_type: {
+        type: DataTypes.CHAR(2),
         allowNull: true,
       },
-      location_details: {
-        type: DataTypes.STRING(250),
+      showtime_date: {
+        type: DataTypes.DATE,
+        allowNull: true,
+      },
+      price_per_seat: {
+        type: DataTypes.INTEGER,
         allowNull: true,
       },
     },
     {
       sequelize,
-      modelName: 'Theatre',
-      tableName: 'theatre',
+      modelName: 'Showtimes',
+      tableName: 'showtimes',
       timestamps: false,
     }
   );
 
-  return Theatre;
+  return Showtimes;
 };
