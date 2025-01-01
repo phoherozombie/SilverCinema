@@ -2,29 +2,119 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('Showtimes', [
+    await queryInterface.bulkInsert('showtimes', [
       {
-        movie_start_time: '10:00',
+        id: 1,
+        movie_start_time: '11:00 am',
         show_type: '2D',
-        showtime_date: '2024-01-01',
-        price_per_seat: 90000,
-        movie_id: 1,
+        showtime_date: '2024-08-19',
+        price_per_seat: 350,
         createdAt: new Date(),
-        updatedAt: new Date()
+        updatedAt: new Date(),
       },
       {
-        movie_start_time: '13:00',
+        id: 2,
+        movie_start_time: '2:30 pm',
         show_type: '3D',
-        showtime_date: '2024-01-01',
-        price_per_seat: 120000,
-        movie_id: 2,
+        showtime_date: '2024-08-19',
+        price_per_seat: 450,
         createdAt: new Date(),
-        updatedAt: new Date()
-      }
+        updatedAt: new Date(),
+      },
+      {
+        id: 3,
+        movie_start_time: '6:00 pm',
+        show_type: '3D',
+        showtime_date: '2024-08-19',
+        price_per_seat: 450,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: 4,
+        movie_start_time: '11:00 am',
+        show_type: '2D',
+        showtime_date: '2024-08-20',
+        price_per_seat: 350,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: 5,
+        movie_start_time: '2:30 pm',
+        show_type: '3D',
+        showtime_date: '2024-08-20',
+        price_per_seat: 450,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: 6,
+        movie_start_time: '6:00 pm',
+        show_type: '3D',
+        showtime_date: '2024-08-20',
+        price_per_seat: 450,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: 7,
+        movie_start_time: '11:00 am',
+        show_type: '2D',
+        showtime_date: '2024-08-21',
+        price_per_seat: 350,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: 8,
+        movie_start_time: '2:30 pm',
+        show_type: '3D',
+        showtime_date: '2024-08-21',
+        price_per_seat: 450,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: 9,
+        movie_start_time: '6:00 pm',
+        show_type: '3D',
+        showtime_date: '2024-08-21',
+        price_per_seat: 450,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: 10,
+        movie_start_time: '11:00 am',
+        show_type: '2D',
+        showtime_date: '2024-08-22',
+        price_per_seat: 350,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: 11,
+        movie_start_time: '2:30 pm',
+        show_type: '3D',
+        showtime_date: '2024-08-22',
+        price_per_seat: 450,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: 12,
+        movie_start_time: '6:00 pm',
+        show_type: '3D',
+        showtime_date: '2024-08-22',
+        price_per_seat: 450,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
     ]);
   },
 
   down: async (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('Showtimes', null, {});
-  }
+    await queryInterface.bulkDelete('showtimes', null, {});
+  },
 };

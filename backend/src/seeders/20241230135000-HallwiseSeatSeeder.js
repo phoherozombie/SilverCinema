@@ -2,29 +2,24 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('HallwiseSeats', [
-      {
-        hall_id: 1,
-        seat_id: 1,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        hall_id: 1,
-        seat_id: 2,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        hall_id: 2,
-        seat_id: 3,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-    ]);
+    const hallwiseSeats = [];
+
+    // Generate hallwise seat data
+    for (let hallId = 1; hallId <= 8; hallId++) {
+      for (let seatId = 1; seatId <= 48; seatId++) {
+        hallwiseSeats.push({
+          hall_id: hallId,
+          seat_id: seatId,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        });
+      }
+    }
+
+    await queryInterface.bulkInsert('hallwise_seat', hallwiseSeats, {});
   },
 
   down: async (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('HallwiseSeats', null, {});
+    await queryInterface.bulkDelete('hallwise_seat', null, {});
   },
 };

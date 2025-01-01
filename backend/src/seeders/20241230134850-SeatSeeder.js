@@ -2,23 +2,59 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const seats = [];
-    const rows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
-    
-    for (let row of rows) {
-      for (let i = 1; i <= 12; i++) {
-        seats.push({
-          name: `${row}${i}`,
-          createdAt: new Date(),
-          updatedAt: new Date()
-        });
-      }
-    }
-    
-    return queryInterface.bulkInsert('Seats', seats);
+    await queryInterface.bulkInsert('seat', [
+      { id: 1, name: 'A1', createdAt: new Date(), updatedAt: new Date() },
+      { id: 2, name: 'A2', createdAt: new Date(), updatedAt: new Date() },
+      { id: 3, name: 'A3', createdAt: new Date(), updatedAt: new Date() },
+      { id: 4, name: 'A4', createdAt: new Date(), updatedAt: new Date() },
+      { id: 5, name: 'A5', createdAt: new Date(), updatedAt: new Date() },
+      { id: 6, name: 'A6', createdAt: new Date(), updatedAt: new Date() },
+      { id: 7, name: 'A7', createdAt: new Date(), updatedAt: new Date() },
+      { id: 8, name: 'A8', createdAt: new Date(), updatedAt: new Date() },
+      { id: 9, name: 'B1', createdAt: new Date(), updatedAt: new Date() },
+      { id: 10, name: 'B2', createdAt: new Date(), updatedAt: new Date() },
+      { id: 11, name: 'B3', createdAt: new Date(), updatedAt: new Date() },
+      { id: 12, name: 'B4', createdAt: new Date(), updatedAt: new Date() },
+      { id: 13, name: 'B5', createdAt: new Date(), updatedAt: new Date() },
+      { id: 14, name: 'B6', createdAt: new Date(), updatedAt: new Date() },
+      { id: 15, name: 'B7', createdAt: new Date(), updatedAt: new Date() },
+      { id: 16, name: 'B8', createdAt: new Date(), updatedAt: new Date() },
+      { id: 17, name: 'C1', createdAt: new Date(), updatedAt: new Date() },
+      { id: 18, name: 'C2', createdAt: new Date(), updatedAt: new Date() },
+      { id: 19, name: 'C3', createdAt: new Date(), updatedAt: new Date() },
+      { id: 20, name: 'C4', createdAt: new Date(), updatedAt: new Date() },
+      { id: 21, name: 'C5', createdAt: new Date(), updatedAt: new Date() },
+      { id: 22, name: 'C6', createdAt: new Date(), updatedAt: new Date() },
+      { id: 23, name: 'C7', createdAt: new Date(), updatedAt: new Date() },
+      { id: 24, name: 'C8', createdAt: new Date(), updatedAt: new Date() },
+      { id: 25, name: 'D1', createdAt: new Date(), updatedAt: new Date() },
+      { id: 26, name: 'D2', createdAt: new Date(), updatedAt: new Date() },
+      { id: 27, name: 'D3', createdAt: new Date(), updatedAt: new Date() },
+      { id: 28, name: 'D4', createdAt: new Date(), updatedAt: new Date() },
+      { id: 29, name: 'D5', createdAt: new Date(), updatedAt: new Date() },
+      { id: 30, name: 'D6', createdAt: new Date(), updatedAt: new Date() },
+      { id: 31, name: 'D7', createdAt: new Date(), updatedAt: new Date() },
+      { id: 32, name: 'D8', createdAt: new Date(), updatedAt: new Date() },
+      { id: 33, name: 'E1', createdAt: new Date(), updatedAt: new Date() },
+      { id: 34, name: 'E2', createdAt: new Date(), updatedAt: new Date() },
+      { id: 35, name: 'E3', createdAt: new Date(), updatedAt: new Date() },
+      { id: 36, name: 'E4', createdAt: new Date(), updatedAt: new Date() },
+      { id: 37, name: 'E5', createdAt: new Date(), updatedAt: new Date() },
+      { id: 38, name: 'E6', createdAt: new Date(), updatedAt: new Date() },
+      { id: 39, name: 'E7', createdAt: new Date(), updatedAt: new Date() },
+      { id: 40, name: 'E8', createdAt: new Date(), updatedAt: new Date() },
+      { id: 41, name: 'F1', createdAt: new Date(), updatedAt: new Date() },
+      { id: 42, name: 'F2', createdAt: new Date(), updatedAt: new Date() },
+      { id: 43, name: 'F3', createdAt: new Date(), updatedAt: new Date() },
+      { id: 44, name: 'F4', createdAt: new Date(), updatedAt: new Date() },
+      { id: 45, name: 'F5', createdAt: new Date(), updatedAt: new Date() },
+      { id: 46, name: 'F6', createdAt: new Date(), updatedAt: new Date() },
+      { id: 47, name: 'F7', createdAt: new Date(), updatedAt: new Date() },
+      { id: 48, name: 'F8', createdAt: new Date(), updatedAt: new Date() },
+    ]);
   },
 
   down: async (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('Seats', null, {});
-  }
+    await queryInterface.bulkDelete('seat', null, {});
+  },
 };
