@@ -5,9 +5,9 @@ import Image from "next/image";
 import logo from "../../public/logo.svg";
 import userProf from "../../public/user.svg";
 import dropdown from "../../public/dropdown.svg";
-import SignUpModal from "../modals/SignupModal";
-import SignInModal from "../modals/LoginModal";
-import "../app/styles/styles.css";
+import SignUpModal from "../SignupModal";
+import SignInModal from "../LoginModal";
+import "../../styles/styles.css";
 
 const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
