@@ -4,7 +4,6 @@ import { get, post, put, del } from '../baseApi';
 export const fetchTheatres = async () => {
   try {
     const theatres = await get('/theatres');
-    console.log('theatres:', theatres);
     return theatres;
   } catch (error) {
     console.error('Error fetching theatres:', error);

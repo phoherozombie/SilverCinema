@@ -4,7 +4,12 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
-dotenv.config();
+
+app.use(cors({
+  origin: 'http://localhost:3000',
+  methods: 'GET,POST,PUT,DELETE',
+  credentials: true, // Allow credentials if needed
+}));
 
 // Middleware to parse JSON and form-data requests
 app.use(express.json());

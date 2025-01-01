@@ -78,3 +78,66 @@ exports.adminRoute = (req, res) => {
 
   res.status(200).json({ message: "Welcome to the admin route!" });
 };
+
+
+// User Register Controller
+exports.registerUser = async (req, res) => {
+  const { firstName: first_name, lastName: last_name, email, password, phoneNumber: phone_number } = req.body;
+
+  try {
+    // Validate input fields
+    if (!first_name || !last_name || !email || !password) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
+    // Check if user already exists
+    const existingUser = await User.findOne({ where: { email } });
+    if (existingUser) {
+      return res.status(400).json({ message: "User with this email already exists" });
+    }
+
+    // Hash the password before saving
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create new user
+    const newUser = await User.create({
+      first_name,
+      last_name,
+      email,
+      password: hashedPassword,
+      phone_number,
+      account_balance: 0, // Set default account balance to 0
+      type_account: 'customer', // Set default type account to 'customer'
+    });
+
+    // Log user details for debugging
+    console.log("User created:", {
+      id: newUser.id,
+      email: newUser.email,
+      role: newUser.type_account,
+    });
+
+    // Generate JWT token for the newly registered user
+    const token = jwt.sign(
+      { id: newUser.id, role: newUser.type_account },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+
+    // Return success response with token and user info
+    res.status(201).json({
+      message: "User registered successfully",
+      token,
+      user: {
+        id: newUser.id,
+        first_name: newUser.first_name,
+        last_name: newUser.last_name,
+        email: newUser.email,
+        role: newUser.type_account,
+      },
+    });
+  } catch (error) {
+    console.error("Error during registration:", error.message);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};

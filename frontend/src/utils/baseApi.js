@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create an axios instance with the base URL from the environment variable
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,  // Use the API_URL from .env file
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -13,13 +13,6 @@ const api = axios.create({
 api.interceptors.request.use(
   (config) => {
     console.log('Base URL:', config.baseURL);
-    // Here, you can add logic for authorization tokens or other headers
-    // For example, if you use JWT tokens:
-    // const token = localStorage.getItem('token');
-    // if (token) {
-    //   config.headers['Authorization'] = `Bearer ${token}`;
-    // }
-
     return config;
   },
   (error) => {

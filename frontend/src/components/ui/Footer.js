@@ -1,19 +1,31 @@
 "use client";
-
 import { useEffect, useState } from "react";
-// import { useRouter } from "next/router";
 import Link from "next/link";
-import axios from "axios";
 import React from "react";
 import { HashLoader } from "react-spinners";
 import "../../styles/styles.css";
 import { fetchTheatres } from "../../utils/api/theatres";
+import SignUpModal from "../SignupModal";
+import LoginModal from "../LoginModal";
 
 const Footer = () => {
   const [theatres, setTheatres] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [modalsActive, setModalsActive] = useState({
+    login: false,
+    signup: false,
+  });
+
+  const toggleModal = (modalName) => {
+    setModalsActive((prevState) => ({
+      ...prevState,
+      [modalName]: !prevState[modalName], // Toggle the modal's state
+    }));
+  };
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
     const fetchData = async () => {
       try {
         const data = await fetchTheatres(); // Fetch theatres from the backend
@@ -25,7 +37,23 @@ const Footer = () => {
       }
     };
 
+    if (token) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+
+    const handleUserLoggedIn = () => {
+      setIsLoggedIn(true);
+    };
+
+    window.addEventListener("userLoggedIn", handleUserLoggedIn);
+
     fetchData();
+
+    return () => {
+      window.removeEventListener("userLoggedIn", handleUserLoggedIn);
+    };
   }, []);
 
   return (
@@ -57,26 +85,29 @@ const Footer = () => {
         </a>
       </Link>
 
-      <div className="footer-link-container foot-reg">
-        <button
-        //   className="footer-btn"
-        //   onClick={() => dispatch(showSignModal())}
-        >
-          Create account
-        </button>
-      </div>
+      {isLoggedIn ? (
+        <></>
+      ) : (
+        <>
+          {" "}
+          <div className="footer-link-container foot-reg">
+            <button
+              className="footer-btn"
+              onClick={() => toggleModal("signup")}
+            >
+              Create account
+            </button>
+          </div>
+          <div className="footer-link-container">
+            <button className="footer-btn" onClick={() => toggleModal("login")}>
+              Sign in
+            </button>
+          </div>
+        </>
+      )}
 
       <div className="footer-link-container">
-        <button
-        //   className="footer-btn"
-        //   onClick={() => dispatch(showLoginModal())}
-        >
-          Sign in
-        </button>
-      </div>
-
-      <div className="footer-link-container">
-        <Link href="/aboutus" className="footer-link">
+        <Link href="/about-us" className="footer-link">
           About us
         </Link>
       </div>
@@ -103,6 +134,12 @@ const Footer = () => {
           ))
         )}
       </div>
+      {modalsActive.login && (
+        <LoginModal onClose={() => toggleModal("login")} />
+      )}
+      {modalsActive.signup && (
+        <SignUpModal onClose={() => toggleModal("signup")} />
+      )}
     </section>
   );
 };
