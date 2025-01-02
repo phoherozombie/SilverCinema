@@ -7,16 +7,29 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'movie', // Referencing the 'movie' table
-          key: 'id',
+          model: {
+            tableName: 'movie', // Tên bảng phải chính xác
+            schema: 'your_schema_name', // Thay bằng tên schema nếu có
+          },
+          key: 'id', // Cột tham chiếu
         },
-        onDelete: 'CASCADE', // Cascade delete when a movie is removed
+        onDelete: 'CASCADE',
         primaryKey: true,
       },
       genre: {
         type: Sequelize.STRING(30),
         allowNull: false,
         primaryKey: true,
+      },
+      createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
       },
     });
   },
