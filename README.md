@@ -12,7 +12,7 @@ To run this project, follow these steps:
 Clone the repository to your local machine:
 
 ```bash
-git clone https://github.com/phoherozombie/movie_ticket_booking_website.git
+git clone https://github.com/phoherozombie/SilverCinema.git
 ```
 
 ### 2. Set Up the Frontend
