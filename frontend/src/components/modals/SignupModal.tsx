@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Form, Input, Button, Modal } from "antd";
 import BarLoader from "react-spinners/BarLoader";
 import { useRouter } from "next/navigation";
-import { register } from "../utils/api/auth"; // Make sure to implement this API function
-import { signupFailedToast, signupSuccessToast } from "../toasts/toast";
+import { register } from "../../utils/api/auth";
+import { signupFailedToast, signupSuccessToast } from "../../toasts/toast";
 
 const SignUpModal = ({ onClose }) => {
   const [loading, setLoading] = useState(false);
@@ -30,12 +30,11 @@ const SignUpModal = ({ onClose }) => {
   const handleSignUp = async (values) => {
     setLoading(true);
     try {
-      console.log(values);
-      const response = await register(values); // Sign-up API function
+      const response = await register(values);
       const { token, user } = response;
       console.log(token, user);
 
-      signupSuccessToast(); // Redirect to home page
+      signupSuccessToast();
       onClose();
       form.resetFields();
     } catch (err) {
@@ -48,27 +47,37 @@ const SignUpModal = ({ onClose }) => {
 
   // Handle error case with toast
   const handleSignUpError = (err) => {
-    console.log(err.response.data.message);
+    console.log(err.response?.data?.message);
     const errorMessage =
       err.response?.data?.message || "Sign up failed. Please try again.";
-      signupFailedToast(errorMessage);
+    signupFailedToast(errorMessage);
   };
 
   return (
     <Modal
-      title="Sign Up to SilverScreen"
+      title={
+        <h2 className="text-3xl font-semibold text-[#d4314d] text-left">
+          Sign Up to SilverScreen
+        </h2>
+      }
       open={true}
       onCancel={onClose}
       footer={null}
+      className="p-4 rounded-lg shadow-lg"
     >
-      <Form form={form} onFinish={handleSignUp} layout="vertical">
-        <div className="form-row">
+      <Form
+        form={form}
+        onFinish={handleSignUp}
+        layout="vertical"
+        className="space-y-4"
+      >
+        <div className="grid grid-cols-2 gap-4">
           <Form.Item
             name="firstName"
-            label="First Name"
+            label={<span className="text-lg font-medium text-gray-700">First Name</span>}
             rules={[
               { required: true, message: "Please enter your first name!" },
-              { pattern: /^\S*$/, message: "No white spaces allowed!" }
+              { pattern: /^\S*$/, message: "No white spaces allowed!" },
             ]}
           >
             <Input
@@ -78,14 +87,15 @@ const SignUpModal = ({ onClose }) => {
               onChange={handleInputChange}
               placeholder="Your first name"
               disabled={loading}
+              className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-[#d4314d]"
             />
           </Form.Item>
           <Form.Item
             name="lastName"
-            label="Last Name"
+            label={<span className="text-lg font-medium text-gray-700">Last Name</span>}
             rules={[
               { required: true, message: "Please enter your last name!" },
-              { pattern: /^\S*$/, message: "No white spaces allowed!" }
+              { pattern: /^\S*$/, message: "No white spaces allowed!" },
             ]}
           >
             <Input
@@ -95,13 +105,14 @@ const SignUpModal = ({ onClose }) => {
               onChange={handleInputChange}
               placeholder="Your last name"
               disabled={loading}
+              className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-[#d4314d]"
             />
           </Form.Item>
         </div>
 
         <Form.Item
           name="email"
-          label="Email"
+          label={<span className="text-lg font-medium text-gray-700">Email</span>}
           rules={[
             { required: true, message: "Please enter your email!" },
             {
@@ -117,12 +128,13 @@ const SignUpModal = ({ onClose }) => {
             onChange={handleInputChange}
             placeholder="Your email"
             disabled={loading}
+            className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-[#d4314d]"
           />
         </Form.Item>
 
         <Form.Item
           name="password"
-          label="Password"
+          label={<span className="text-lg font-medium text-gray-700">Password</span>}
           rules={[
             { required: true, message: "Please enter your password!" },
             {
@@ -138,13 +150,13 @@ const SignUpModal = ({ onClose }) => {
             onChange={handleInputChange}
             placeholder="Your password"
             disabled={loading}
+            className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-[#d4314d]"
           />
         </Form.Item>
 
-        {/* New Phone Number Input with pattern */}
         <Form.Item
           name="phoneNumber"
-          label="Phone Number"
+          label={<span className="text-lg font-medium text-gray-700">Phone Number</span>}
           rules={[
             { required: true, message: "Please enter your phone number!" },
             {
@@ -160,12 +172,19 @@ const SignUpModal = ({ onClose }) => {
             onChange={handleInputChange}
             placeholder="Your phone number"
             disabled={loading}
+            className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-[#d4314d]"
           />
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" htmlType="submit" block disabled={loading}>
-            {loading ? <BarLoader color="#e6e6e8" /> : "Sign Up"}
+          <Button
+            type="primary"
+            htmlType="submit"
+            block
+            disabled={loading}
+            className="bg-[#d4314d] text-white font-medium py-2 px-4 rounded-lg hover:bg-[#bf2c44] hover:text-white transition-all duration-300"
+          >
+            {loading ? <BarLoader color="#ffffff" /> : "Sign Up"}
           </Button>
         </Form.Item>
       </Form>

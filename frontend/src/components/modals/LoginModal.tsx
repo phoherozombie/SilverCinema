@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Form, Input, Button, Modal } from "antd";
 import BarLoader from "react-spinners/BarLoader";
 import { useRouter } from "next/navigation";
-import { login } from "../utils/api/auth";
-import { loginFailedToast, loginSuccessToast } from "../toasts/toast";
+import { login } from "../../utils/api/auth";
+import { loginFailedToast, loginSuccessToast } from "../../toasts/toast";
 
 const LoginModal = ({ onClose }) => {
   const [loading, setLoading] = useState(false);
@@ -25,7 +25,7 @@ const LoginModal = ({ onClose }) => {
     setLoading(true);
     try {
       const response = await login(values);
-      const { token, user } = await response;
+      const { token, user } = response;
       console.log(token, user);
       localStorage.setItem("token", token);
       localStorage.setItem("user", user.id);
@@ -73,15 +73,25 @@ const LoginModal = ({ onClose }) => {
 
   return (
     <Modal
-      title="Sign in to SilverScreen"
+      title={
+        <h2 className="text-3xl font-semibold text-[#d4314d] text-left">
+          Sign in to SilverScreen
+        </h2>
+      }
       open={true}
       onCancel={onClose}
       footer={null}
+      className="p-4 rounded-lg shadow-lg"
     >
-      <Form form={form} onFinish={handleLogin} layout="vertical">
+      <Form
+        form={form}
+        onFinish={handleLogin}
+        layout="vertical"
+        className="space-y-4"
+      >
         <Form.Item
           name="email"
-          label="Email"
+          label={<span className="text-lg font-medium text-gray-700">Email</span>}
           rules={[{ required: true, message: "Please enter your email!" }]}
         >
           <Input
@@ -91,12 +101,15 @@ const LoginModal = ({ onClose }) => {
             value={inputs.email}
             onChange={handleInputChange}
             disabled={loading}
+            className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-[#d4314d]"
           />
         </Form.Item>
 
         <Form.Item
           name="password"
-          label="Password"
+          label={
+            <span className="text-lg font-medium text-gray-700">Password</span>
+          }
           rules={[{ required: true, message: "Please enter your password!" }]}
         >
           <Input.Password
@@ -105,12 +118,23 @@ const LoginModal = ({ onClose }) => {
             value={inputs.password}
             onChange={handleInputChange}
             disabled={loading}
+            className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-[#d4314d]"
           />
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" htmlType="submit" block disabled={loading}>
-            {loading ? <BarLoader color="#e6e6e8" /> : "Sign In"}
+          <Button
+            type="primary"
+            htmlType="submit"
+            block
+            disabled={loading}
+            className="bg-[#d4314d] text-white font-medium py-2 px-4 rounded-lg hover:bg-red transition-all duration-300"
+          >
+            {loading ? (
+              <BarLoader color="#ffffff" />
+            ) : (
+              "Sign In"
+            )}
           </Button>
         </Form.Item>
       </Form>

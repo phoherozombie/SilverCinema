@@ -25,7 +25,7 @@ export const loginSuccessToast = () => {
   });
 };
 
-export const loginFailedToast = () => {
+export const loginFailedToast = (errorMessage) => {
   toast.error("Login failed. Please check your credentials.", {
     ...toastPrimaryCategories,
     theme: "colored",
@@ -41,7 +41,7 @@ export const signupSuccessToast = () => {
   });
 };
 
-export const signupFailedToast = () => {
+export const signupFailedToast = (errorMessage) => {
   toast.error("Signup failed. Please try again later.", {
     ...toastPrimaryCategories,
     theme: "colored",

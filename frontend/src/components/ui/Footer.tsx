@@ -5,8 +5,8 @@ import React from "react";
 import { HashLoader } from "react-spinners";
 import "../../styles/styles.css";
 import { fetchTheatres } from "../../utils/api/theatres";
-import SignUpModal from "../SignupModal";
-import LoginModal from "../LoginModal";
+import SignUpModal from "../modals/SignupModal";
+import LoginModal from "../modals/LoginModal";
 
 const Footer = () => {
   const [theatres, setTheatres] = useState([]);
