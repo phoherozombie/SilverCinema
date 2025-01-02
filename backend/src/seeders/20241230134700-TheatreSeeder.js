@@ -4,18 +4,18 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('Theatres', [
       {
-        name: 'Silver Cinema Quận 1',
-        location: 'Quận 1',
-        location_details: '123 Lê Lợi, Phường Bến Nghé, Quận 1, TP.HCM',
+ name: 'CGV Vincom Đà Nẵng',
+        location: 'Hải Châu',
+        location_details: 'Tầng 4, Vincom Plaza Ngô Quyền, Số 910A Ngô Quyền, Quận Sơn Trà, Đà Nẵng',
         createdAt: new Date(),
-        updatedAt: new Date()
+        updatedAt: new Date(),
       },
       {
-        name: 'Silver Cinema Quận 7',
-        location: 'Quận 7',
-        location_details: '456 Nguyễn Thị Thập, Phường Tân Phú, Quận 7, TP.HCM',
+        name: 'Lotte Cinema Đà Nẵng',
+        location: 'Cẩm Lệ',
+        location_details: 'Tầng 5, TTTM Lotte Mart, 6 Nại Nam, Quận Cẩm Lệ, Đà Nẵng',
         createdAt: new Date(),
-        updatedAt: new Date()
+        updatedAt: new Date(),
       }
     ]);
   },

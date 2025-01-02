@@ -4,7 +4,7 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     const seats = [];
     const rows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
-    
+
     for (let row of rows) {
       for (let i = 1; i <= 12; i++) {
         seats.push({
@@ -14,7 +14,7 @@ module.exports = {
         });
       }
     }
-    
+
     return queryInterface.bulkInsert('Seats', seats);
   },
 
