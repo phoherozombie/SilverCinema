@@ -17,10 +17,6 @@ import { MobileNav } from "./components/MobileNav";
 import { PageLoader } from "./components/PageLoader";
 import { ScrollToTop } from "./components/ScrollToTop";
 
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { login } from "./reducers/authSlice";
-
 import HomePage from "./pages/Home/HomePage";
 
 const PurchasePage = lazy(() => import("./pages/Purchase/PurchasePage"));
@@ -45,16 +41,6 @@ function App() {
     useSelector((store) => store.authentication);
   const { menuState } = useSelector((store) => store.mobileNav);
   const currentPage = useLocation();
-  const dispatch = useDispatch();
-
-  // Load persisted data on app start
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (token && user) {
-      dispatch(login(user));
-    }
-  }, [dispatch]);
 
   return (
     <>
@@ -70,28 +56,39 @@ function App() {
           <Routes key={currentPage.pathname} location={currentPage}>
             <Route path="/" element={<HomePage />} />
             <Route path="/showtimes" element={<ShowtimesPage />} />
-            <Route path="/purchase" element={<PurchasePage />} />
-            <Route path="/customer" element={<CustomerInfoPage />} />
-            <Route path="/aboutus" element={<AboutUsPage />} />
-            <Route path="/movieDetails/:id" element={<MovieDetailsPage />} />
-            <Route path="/purchase" element={<PurchasePage />} />
-            <Route path="/customer" element={<CustomerInfoPage />} />
             <Route
-              path="/movieDetails"
-              element={<Navigate replace to="/movieDetails/1" />}
-            />
+              element={
+                <ProtectedRoute
+                  condition={
+                    isAuthenticated && signedPerson.person_type === "Customer"
+                  }
+                />
+              }
+            >
+              <Route path="/purchase" element={<PurchasePage />} />
+              <Route path="/customer" element={<CustomerInfoPage />} />
+            </Route>
 
             <Route
               element={
                 <ProtectedRoute
                   condition={
-                    isAuthenticated && signedPerson.type_account === "admin"
+                    isAuthenticated && signedPerson.person_type === "Admin"
                   }
                 />
               }
             >
               <Route path="/admin" element={<AdminPage />} />
             </Route>
+
+            <Route path="/aboutus" element={<AboutUsPage />} />
+
+            <Route
+              path="/movieDetails"
+              element={<Navigate replace to="/movieDetails/1" />}
+            />
+
+            <Route path="/movieDetails/:id" element={<MovieDetailsPage />} />
           </Routes>
         </Suspense>
       </div>
