@@ -1,5 +1,16 @@
 import { get, post } from '../baseApi';
 
+// Function to fetch the current user
+export const getCurrentUser = async () => {
+  try {
+    const data = await get('/auth/current-user'); // API trả về thông tin người dùng dựa trên token
+    return data; 
+  } catch (error) {
+    console.error('Failed to fetch current user:', error);
+    throw error;
+  }
+};
+
 // Function to handle login
 export const login = async (credentials) => {
     try {
